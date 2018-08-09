@@ -1,0 +1,68 @@
+<button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#modalRegistro">
+  Registrar vehículo
+</button>
+<br>
+<br>
+<!-- Modal -->
+<div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registrar vehículo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formularioRegistro">
+          <div class="form-group row">
+            <label for="placa" class="col-sm-4 col-form-label">Placa</label>
+            <div class="col-sm-8">
+              <input formControlName="placa" type="text" class="form-control" id="placa" placeholder="Ingrese placa">
+            </div>
+          </div>
+
+          <fieldset class="form-group">
+            <div class="row">
+              <legend class="col-form-label col-sm-4 pt-0">Tipo vehículo</legend>
+              <div class="col-sm-8">
+                <div class="form-check">
+                  <input formControlName="tipoVehiculo" class="form-check-input" type="radio" name="tipoVehiculo" id="tipoVehiculoCarro" value="CARRO"
+                    checked>
+                  <label class="form-check-label" for="tipoVehiculoCarro">
+                    Carro
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input formControlName="tipoVehiculo" class="form-check-input" type="radio" name="tipoVehiculo" id="tipoVehiculoMoto" value="MOTO">
+                  <label class="form-check-label" for="tipoVehiculoMoto">
+                    Moto
+                  </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-group row" *ngIf="formularioRegistro.value.tipoVehiculo === 'MOTO'">
+            <label for="placa" class="col-sm-4 col-form-label">Cilindraje</label>
+            <div class="col-sm-8">
+              <input formControlName="cilindraje" type="number" class="form-control" id="cilinadraje" placeholder="Ingrese cilinadraje">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" [disabled]="!formularioRegistro.valid" (click)="registrarVehiculo()">Registrar vehículo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="mostrarAlertRegistro && respuesta" [ngClass]="(respuesta.codigo=='00')?'alert-success':'alert-danger'" class="alert alert-dismissible fade show"
+  role="alert">
+  {{respuesta.mensaje}}
+  <button type="button" class="close" (click)="cerrarAlertRegistro()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
